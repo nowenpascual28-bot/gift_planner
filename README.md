@@ -1,6 +1,6 @@
 # Gift Planner
 
-**Live demo:** https://github.com/nowenpascual28-bot/gift_planner.git
+**Live demo:** https://github.com/nowenpascual28-bot/gift_planner
 
 **Course:** Applications Development and Emerging Technologies (6ADET)  
 **Author:** Nowen Pascual
