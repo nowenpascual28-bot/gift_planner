@@ -27,7 +27,7 @@ The app is designed for individual users who regularly buy gifts for family memb
 ### Install
 
 ```bash
-git clone https://github.com/nowenpascual28-bot/gift_planner.git
+git clone https://github.com/nowenpascual28-bot/gift_planner
 cd gift_planner
 flutter pub get
 ```
