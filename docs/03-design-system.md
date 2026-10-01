@@ -1,6 +1,6 @@
 # Design system
 
-The Gift Planner design system uses a light-only Material 3 theme with a soft purple/pink palette. The same values are implemented in `lib/theme/app_colors.dart`, `lib/theme/app_spacing.dart`, and `lib/theme/app_theme.dart`.
+The Gift Planner design system uses a Material 3 theme with a soft purple/pink palette and supports both light and dark modes. The same values are implemented in `lib/theme/app_colors.dart`, `lib/theme/app_spacing.dart`, and `lib/theme/app_theme.dart`.
 
 ## Visual reference
 
@@ -24,7 +24,7 @@ The body text colour `#211B3A` on the background `#FFF7FA` has approximately 14:
 
 ## Theme mode
 
-The MVP uses **light mode only**. A dark theme is intentionally out of scope so the project can keep its visual system focused and consistent.
+The app supports **light and dark mode**. The theme toggle is available from the top navigation. Both modes keep the same purple/pink visual identity while changing background, surface, and text colors for readability.
 
 ## Type scale
 

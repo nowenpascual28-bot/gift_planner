@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'config/env.dart';
 import 'screens/auth/auth_gate.dart';
 import 'theme/app_theme.dart';
+import 'theme/theme_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,30 +24,30 @@ class GiftPlannerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Gift Planner',
-      debugShowCheckedModeBanner: false,
-
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-
-      theme: AppTheme.lightTheme,
-
-      home: Env.isConfigured ? const AuthGate() : const SupabaseSetupScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeController.mode,
+      builder: (context, mode, _) {
+        return MaterialApp(
+          title: 'Gift Planner',
+          debugShowCheckedModeBanner: false,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: mode,
+          home: Env.isConfigured ? const AuthGate() : const SupabaseSetupScreen(),
+        );
+      },
     );
   }
 }
 
-/// Shown instead of crashing when the app has no Supabase configuration.
-/// Run with, for example:
-///   flutter run -d chrome --dart-define-from-file=.env
-/// after copying .env.example to .env and filling in your project's URL and
-/// publishable key.
 class SupabaseSetupScreen extends StatelessWidget {
   const SupabaseSetupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -55,16 +56,9 @@ class SupabaseSetupScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.card_giftcard,
-                  size: 72,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                Icon(Icons.card_giftcard, size: 72, color: scheme.primary),
                 const SizedBox(height: 16),
-                Text(
-                  'Gift Planner',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+                Text('Gift Planner', style: Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: 16),
                 Text(
                   'Supabase is not configured yet.',
@@ -73,11 +67,8 @@ class SupabaseSetupScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '1. Copy .env.example to .env\n'
-                  '2. Fill in SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY '
-                  'from your Supabase project settings\n'
-                  '3. Run the app with:\n'
-                  '   flutter run -d chrome --dart-define-from-file=.env',
+                  'The deployed build needs SUPABASE_URL and '
+                  'SUPABASE_PUBLISHABLE_KEY in GitHub Actions secrets.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),

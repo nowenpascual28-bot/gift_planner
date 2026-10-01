@@ -66,7 +66,7 @@ Add them under **GitHub repository → Settings → Secrets and variables → Ac
 
 ## 3. How to run it
 
-For local web development:
+For local web development:  
 
 ```bash
 flutter run -d chrome --dart-define-from-file=.env
@@ -96,6 +96,7 @@ flutter test
 - Shows active gift plans.
 - Shows upcoming occasions.
 - Provides shortcuts to the main sections.
+- Includes a light/dark mode toggle.
 
 ### Recipients
 
@@ -135,7 +136,7 @@ lib/
   config/       Supabase configuration
   models/       Recipient, Occasion, GiftPlan
   services/     Authentication and Supabase CRUD services
-  theme/        Colors, spacing, and Material theme
+  theme/        Colors, spacing, themes, and theme controller
   widgets/      Reusable UI components
   screens/
     auth/       Login, registration, auth gate
@@ -159,7 +160,7 @@ docs/
   assets/       Mockups and design-system materials
 ```
 
-The project intentionally uses simple Flutter state management with `setState` and `FutureBuilder` instead of adding an unnecessary state-management package.
+The project intentionally uses simple Flutter state management with `setState`, `FutureBuilder`, and a small `ValueNotifier` for the theme toggle instead of adding an unnecessary state-management package.
 
 ## 6. Screens and mockup
 
@@ -199,7 +200,7 @@ Until the working-app screenshots are captured, the planning mockups remain clea
 
 ## 8. Known issues and next steps
 
-At the time of this repository cleanup, the remaining verification tasks are:
+Current verification and deployment notes:
 
 - Run `flutter pub get` on the development machine.
 - Run `flutter analyze` and fix any analyzer errors or warnings that matter to the submission.
@@ -208,7 +209,7 @@ At the time of this repository cleanup, the remaining verification tasks are:
 - Test Row Level Security with two separate test accounts.
 - Capture screenshots from the working app.
 - Record the 3–5 minute demo video.
-- Enable GitHub Pages and confirm the live demo after Supabase deployment secrets are configured.
+- GitHub Pages deployment is configured through GitHub Actions; the Supabase deployment secrets must be present for the live app to connect to Supabase.
 
 These are verification/submission tasks rather than new MVP features. The main application structure and CRUD flow are already implemented.
 

@@ -84,6 +84,18 @@ jobs:
         run: flutter test
         continue-on-error: true
 
+      - name: Check Supabase deployment configuration
+        if: steps.check.outputs.ready == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "::error::Missing SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY GitHub Actions secret."
+            echo "Add both under Settings > Secrets and variables > Actions, then rerun the workflow."
+            exit 1
+          fi
+
       - name: Build web
         if: steps.check.outputs.ready == 'true'
         env:

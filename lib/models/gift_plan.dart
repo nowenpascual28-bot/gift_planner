@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Lifecycle of a gift plan, in the order a gift usually moves through.
 enum GiftPlanStatus {
   planned,
   purchased,
@@ -20,7 +19,6 @@ enum GiftPlanStatus {
     }
   }
 
-  /// The value stored in the `status` column.
   String get dbValue => name;
 
   static GiftPlanStatus fromDb(String value) {
@@ -31,8 +29,6 @@ enum GiftPlanStatus {
   }
 }
 
-/// A planned (or already-given) gift for a recipient, optionally tied to a
-/// specific occasion.
 class GiftPlan {
   final String id;
   final String userId;
@@ -46,7 +42,6 @@ class GiftPlan {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  /// Populated only when loaded joined with recipients/occasions.
   final String? recipientName;
   final String? occasionTitle;
 
@@ -70,7 +65,6 @@ class GiftPlan {
 
   bool get isOverBudget => spent > budget;
 
-  /// 0.0 - 1.0+ (can exceed 1 when over budget); callers clamp for display.
   double get progress => budget <= 0 ? 0 : spent / budget;
 
   factory GiftPlan.fromMap(Map<String, dynamic> map) {
@@ -118,8 +112,6 @@ class GiftPlan {
   }
 }
 
-/// Colors used for [GiftPlanStatus] chips, kept in one place so cards and
-/// forms stay in sync.
 extension GiftPlanStatusColor on GiftPlanStatus {
   Color color(ColorScheme scheme) {
     switch (this) {

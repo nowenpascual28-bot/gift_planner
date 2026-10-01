@@ -4,6 +4,7 @@ import '../../services/auth_service.dart';
 import '../../theme/app_spacing.dart';
 import '../../widgets/app_text_field.dart';
 import '../../widgets/primary_button.dart';
+import '../../widgets/theme_toggle_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -42,12 +43,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       await _auth.signUp(email: _email.text.trim(), password: _password.text);
       if (!mounted) return;
       if (_auth.isSignedIn) {
-        // Email confirmation is off: the user is already signed in and the
-        // AuthGate will move to the app shell on its own.
         Navigator.of(context).pop();
       } else {
         setState(() {
-          _info = 'Account created. Check your email to confirm it, then log in.';
+          _info =
+              'Account created. Check your email to confirm it, then log in.';
         });
       }
     } on AuthFailure catch (e) {
@@ -60,7 +60,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create account')),
+      appBar: AppBar(
+        title: const Text('Create account'),
+        actions: const [ThemeToggleButton()],
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -101,8 +104,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _password,
                       obscureText: true,
                       validator: (value) {
-                        if (value == null || value.isEmpty) return 'Password is required';
-                        if (value.length < 6) return 'Use at least 6 characters';
+                        if (value == null || value.isEmpty)
+                          return 'Password is required';
+                        if (value.length < 6)
+                          return 'Use at least 6 characters';
                         return null;
                       },
                     ),
@@ -112,7 +117,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _confirmPassword,
                       obscureText: true,
                       validator: (value) {
-                        if (value != _password.text) return 'Passwords do not match';
+                        if (value != _password.text)
+                          return 'Passwords do not match';
                         return null;
                       },
                     ),
@@ -120,7 +126,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: AppSpacing.space16),
                       Text(
                         _error!,
-                        style: TextStyle(color: Theme.of(context).colorScheme.error),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -128,15 +136,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: AppSpacing.space16),
                       Text(
                         _info!,
-                        style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
                     const SizedBox(height: AppSpacing.space24),
-                    PrimaryButton(label: 'Register', onPressed: _submit, loading: _loading),
+                    PrimaryButton(
+                      label: 'Register',
+                      onPressed: _submit,
+                      loading: _loading,
+                    ),
                     const SizedBox(height: AppSpacing.space16),
                     TextButton(
-                      onPressed: _loading ? null : () => Navigator.of(context).pop(),
+                      onPressed: _loading
+                          ? null
+                          : () => Navigator.of(context).pop(),
                       child: const Text('Already have an account? Log in'),
                     ),
                   ],

@@ -1,4 +1,3 @@
-/// A date worth remembering for a recipient (birthday, anniversary, etc).
 class Occasion {
   final String id;
   final String userId;
@@ -9,8 +8,6 @@ class Occasion {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  /// Populated only when the occasion was loaded joined with its recipient,
-  /// so screens can show a name without a second query. Null otherwise.
   final String? recipientName;
 
   const Occasion({
@@ -58,10 +55,6 @@ class Occasion {
     };
   }
 
-  /// Number of days from today until this saved occasion date.
-  ///
-  /// Occasions are treated as specific saved events. A past event stays in
-  /// the history/list as a past event instead of being moved to next year.
   int daysRemaining({DateTime? from}) {
     final today = _dateOnly(from ?? DateTime.now());
     final eventDate = _dateOnly(date);
