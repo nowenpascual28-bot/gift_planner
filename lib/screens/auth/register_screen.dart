@@ -4,7 +4,6 @@ import '../../services/auth_service.dart';
 import '../../theme/app_spacing.dart';
 import '../../widgets/app_text_field.dart';
 import '../../widgets/primary_button.dart';
-import '../../widgets/theme_toggle_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -61,9 +60,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create account'),
-        actions: const [ThemeToggleButton()],
-      ),
+  title: const Text('Create account'),
+),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
