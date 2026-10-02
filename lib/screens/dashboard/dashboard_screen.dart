@@ -51,11 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _giftPlanService.getGiftPlans(),
     ]);
     final activePlans = (results[2] as List<GiftPlan>)
-        .where(
-          (p) =>
-              p.status != GiftPlanStatus.completed &&
-              p.status != GiftPlanStatus.cancelled,
-        )
+        .where((p) => p.status != GiftPlanStatus.completed && p.status != GiftPlanStatus.cancelled)
         .toList();
     return _DashboardData(
       upcoming: results[0] as List<Occasion>,
@@ -78,15 +74,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).colorScheme.primary.withValues(alpha: 0.12),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(
-                Icons.card_giftcard,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              child: Icon(Icons.card_giftcard, color: Theme.of(context).colorScheme.primary),
             ),
             const SizedBox(width: 10),
             const Text('Gift Planner'),
@@ -182,14 +173,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Container(
                   padding: const EdgeInsets.all(AppSpacing.space16),
                   decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.08),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary.withValues(alpha: 0.12),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
                     ),
                   ),
                   child: Row(
@@ -198,15 +185,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.primary.withValues(alpha: 0.14),
+                          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.14),
                           borderRadius: BorderRadius.circular(14),
                         ),
-                        child: Icon(
-                          Icons.auto_awesome_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                        child: Icon(Icons.auto_awesome_rounded, color: Theme.of(context).colorScheme.primary),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -242,10 +224,7 @@ class _WelcomeBanner extends StatelessWidget {
   final int occasionCount;
   final int activePlanCount;
 
-  const _WelcomeBanner({
-    required this.occasionCount,
-    required this.activePlanCount,
-  });
+  const _WelcomeBanner({required this.occasionCount, required this.activePlanCount});
 
   @override
   Widget build(BuildContext context) {
@@ -277,17 +256,13 @@ class _WelcomeBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Plan something thoughtful 🎁',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleMedium?.copyWith(color: Colors.white),
+                  'Plan something thoughtful ✨',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   '$occasionCount upcoming occasion${occasionCount == 1 ? '' : 's'} · $activePlanCount active plan${activePlanCount == 1 ? '' : 's'}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white.withValues(alpha: 0.9)),
                 ),
               ],
             ),
@@ -299,11 +274,7 @@ class _WelcomeBanner extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.16),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.card_giftcard_rounded,
-              color: Colors.white,
-              size: 28,
-            ),
+            child: const Icon(Icons.card_giftcard_rounded, color: Colors.white, size: 28),
           ),
         ],
       ),
@@ -332,11 +303,7 @@ class _BudgetSummaryCard extends StatelessWidget {
   final double spent;
   final VoidCallback onTap;
 
-  const _BudgetSummaryCard({
-    required this.budget,
-    required this.spent,
-    required this.onTap,
-  });
+  const _BudgetSummaryCard({required this.budget, required this.spent, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -364,20 +331,14 @@ class _BudgetSummaryCard extends StatelessWidget {
                       color: scheme.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(13),
                     ),
-                    child: Icon(
-                      Icons.account_balance_wallet_rounded,
-                      color: scheme.primary,
-                    ),
+                    child: Icon(Icons.account_balance_wallet_rounded, color: scheme.primary),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Gift budget',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                        Text('Gift budget', style: Theme.of(context).textTheme.titleMedium),
                         Text(
                           '₱${spent.toStringAsFixed(2)} spent of ₱${budget.toStringAsFixed(2)}',
                           style: Theme.of(context).textTheme.bodySmall,
@@ -385,11 +346,7 @@ class _BudgetSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 16,
-                    color: scheme.onSurfaceVariant,
-                  ),
+                  Icon(Icons.arrow_forward_ios_rounded, size: 16, color: scheme.onSurfaceVariant),
                 ],
               ),
               const SizedBox(height: 14),

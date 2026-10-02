@@ -33,7 +33,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
 
   late final TextEditingController _giftName;
   late final TextEditingController _budget;
-  late final TextEditingController _spent;
   late final TextEditingController _notes;
   String? _recipientId;
   String? _occasionId;
@@ -53,7 +52,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
     final p = widget.plan;
     _giftName = TextEditingController(text: p?.giftName ?? '');
     _budget = TextEditingController(text: p == null ? '' : p.budget.toStringAsFixed(2));
-    _spent = TextEditingController(text: p == null ? '0' : p.spent.toStringAsFixed(2));
     _notes = TextEditingController(text: p?.notes ?? '');
     _recipientId = p?.recipientId ?? widget.initialRecipientId;
     _occasionId = p?.occasionId;
@@ -61,7 +59,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
     _recipientsFuture = _recipientService.getRecipients();
     if (_recipientId != null) _loadOccasionsFor(_recipientId!);
     _budget.addListener(() => setState(() {}));
-    _spent.addListener(() => setState(() {}));
   }
 
   void _loadOccasionsFor(String recipientId) {
@@ -72,7 +69,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
   void dispose() {
     _giftName.dispose();
     _budget.dispose();
-    _spent.dispose();
     _notes.dispose();
     super.dispose();
   }
@@ -109,7 +105,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
     });
     try {
       final budget = _parseNonNegative(_budget.text) ?? 0;
-      final spent = _parseNonNegative(_spent.text) ?? 0;
       late final GiftPlan saved;
       if (_isEditing) {
         final updated = GiftPlan(
@@ -119,7 +114,7 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
           occasionId: _occasionId,
           giftName: _giftName.text.trim(),
           budget: budget,
-          spent: spent,
+          spent: widget.plan!.spent,
           status: _status,
           notes: _notes.text.trim(),
           createdAt: widget.plan!.createdAt,
@@ -132,7 +127,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
           occasionId: _occasionId,
           giftName: _giftName.text.trim(),
           budget: budget,
-          spent: spent,
           status: _status,
           notes: _notes.text.trim(),
         );
@@ -148,7 +142,7 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
   @override
   Widget build(BuildContext context) {
     final previewBudget = _parseNonNegative(_budget.text) ?? 0;
-    final previewSpent = _parseNonNegative(_spent.text) ?? 0;
+    final previewSpent = widget.plan?.spent ?? 0;
 
     return Scaffold(
       appBar: AppTopBar(title: _isEditing ? 'Edit gift plan' : 'New gift plan', showBack: true),
@@ -211,27 +205,18 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
                   },
                 ),
               const SizedBox(height: AppSpacing.space16),
-              Row(
-                children: [
-                  Expanded(
-                    child: AppTextField(
-                      label: 'Budget',
-                      controller: _budget,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      validator: (v) => _parseNonNegative(v ?? '') == null ? 'Enter a valid amount' : null,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.space16),
-                  Expanded(
-                    child: AppTextField(
-                      label: 'Spent',
-                      controller: _spent,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      validator: (v) => _parseNonNegative(v ?? '') == null ? 'Enter a valid amount' : null,
-                    ),
-                  ),
-                ],
+              AppTextField(
+                label: 'Budget',
+                controller: _budget,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                validator: (v) => _parseNonNegative(v ?? '') == null ? 'Enter a valid amount' : null,
               ),
+              const SizedBox(height: AppSpacing.space16),
+              if (_isEditing)
+                Text(
+                  'Spent is updated using the "Add Spent" button on the gift card.',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               const SizedBox(height: AppSpacing.space16),
               BudgetProgress(budget: previewBudget, spent: previewSpent),
               const SizedBox(height: AppSpacing.space16),

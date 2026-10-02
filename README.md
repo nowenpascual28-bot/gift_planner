@@ -66,7 +66,7 @@ Add them under **GitHub repository → Settings → Secrets and variables → Ac
 
 ## 3. How to run it
 
-For local web development:  
+For local web development:
 
 ```bash
 flutter run -d chrome --dart-define-from-file=.env
@@ -119,7 +119,8 @@ flutter test
 - Create a gift plan for a recipient.
 - Optionally connect it to an occasion.
 - Set a budget and amount spent.
-- Track Planned, Purchased, Completed, or Cancelled status.
+- Track Planned, In Progress, Purchased, Completed, or Cancelled status.
+- Add spending directly from a gift card without opening the full edit form.
 - See budget progress and overspending.
 - Edit or delete plans.
 

@@ -54,7 +54,7 @@ The app supports **light and dark mode**. The theme toggle is available from the
 | `StatusChip` | `lib/widgets/status_chip.dart` | gift-plan status | gift plans/history |
 | `RecipientCard` | `lib/widgets/recipient_card.dart` | recipient, edit/delete callbacks | recipients |
 | `OccasionCard` | `lib/widgets/occasion_card.dart` | occasion | dashboard/occasions |
-| `GiftPlanCard` | `lib/widgets/gift_plan_card.dart` | plan, edit/delete callbacks | gift plans |
+| `GiftPlanCard` | `lib/widgets/gift_plan_card.dart` | plan, edit/delete/add-spent callbacks | gift plans |
 | `BudgetProgress` | `lib/widgets/budget_progress.dart` | budget, spent | gift plans |
 | `AppSearchBar` | `lib/widgets/app_search_bar.dart` | controller, change/filter callbacks | recipients |
 | `BottomNavBar` | `lib/widgets/bottom_nav_bar.dart` | current index, tap callback | signed-in shell |

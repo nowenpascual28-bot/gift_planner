@@ -49,13 +49,12 @@ class _GiftPlansScreenState extends State<GiftPlansScreen> {
     }
   }
 
-  void _refresh() => _load();
-
   Future<void> _openForm({GiftPlan? plan}) async {
     final saved = await Navigator.of(context).push<GiftPlan>(
       MaterialPageRoute(builder: (_) => GiftPlanFormScreen(plan: plan)),
     );
     if (!mounted || saved == null) return;
+
     setState(() {
       final index = _plans.indexWhere((p) => p.id == saved.id);
       if (index == -1) {
@@ -66,9 +65,98 @@ class _GiftPlansScreenState extends State<GiftPlansScreen> {
         _plans = updated;
       }
     });
+
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(plan == null ? 'Gift plan added.' : 'Gift plan updated.')),
+      SnackBar(
+        content: Text(
+          plan == null ? 'Gift plan added.' : 'Gift plan updated.',
+        ),
+      ),
     );
+  }
+
+  Future<void> _addSpent(GiftPlan plan) async {
+    final controller = TextEditingController();
+
+    final amount = await showDialog<double>(
+      context: context,
+      builder: (dialogContext) {
+        String? error;
+
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              title: Text('Add Spent to ${plan.giftName}'),
+              content: TextField(
+                controller: controller,
+                autofocus: true,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                decoration: InputDecoration(
+                  prefixText: '₱ ',
+                  labelText: 'Amount spent',
+                  hintText: '0.00',
+                  errorText: error,
+                ),
+                onChanged: (_) {
+                  if (error != null) {
+                    setDialogState(() => error = null);
+                  }
+                },
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(dialogContext),
+                  child: const Text('Cancel'),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    final value = double.tryParse(controller.text.trim());
+                    if (value == null || value <= 0) {
+                      setDialogState(
+                        () => error = 'Enter an amount greater than 0.',
+                      );
+                      return;
+                    }
+                    Navigator.pop(dialogContext, value);
+                  },
+                  child: const Text('Add'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+
+    controller.dispose();
+    if (!mounted || amount == null) return;
+
+    try {
+      final updated = await _service.addSpent(plan.id, amount);
+      if (!mounted) return;
+
+      setState(() {
+        final index = _plans.indexWhere((p) => p.id == updated.id);
+        if (index != -1) {
+          final copy = [..._plans];
+          copy[index] = updated;
+          _plans = copy;
+        }
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Added ₱${amount.toStringAsFixed(2)} to spent.'),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not add spent amount. $e')),
+      );
+    }
   }
 
   Future<void> _confirmDelete(GiftPlan plan) async {
@@ -94,7 +182,7 @@ class _GiftPlansScreenState extends State<GiftPlansScreen> {
     );
     if (confirmed == true) {
       await _service.deleteGiftPlan(plan.id);
-      _refresh();
+      _load();
     }
   }
 
@@ -117,17 +205,13 @@ class _GiftPlansScreenState extends State<GiftPlansScreen> {
                 _FilterChip(
                   label: 'All',
                   selected: _statusFilter == null,
-                  onTap: () {
-                    setState(() => _statusFilter = null);
-                  },
+                  onTap: () => setState(() => _statusFilter = null),
                 ),
                 for (final status in GiftPlanStatus.values)
                   _FilterChip(
                     label: status.label,
                     selected: _statusFilter == status,
-                    onTap: () {
-                      setState(() => _statusFilter = status);
-                    },
+                    onTap: () => setState(() => _statusFilter = status),
                   ),
               ],
             ),
@@ -136,31 +220,39 @@ class _GiftPlansScreenState extends State<GiftPlansScreen> {
               child: _loading
                   ? const LoadingView()
                   : _error != null
-                      ? ErrorStateView(message: _error!, onRetry: _refresh)
+                      ? ErrorStateView(message: _error!, onRetry: _load)
                       : Builder(
                           builder: (context) {
                             final plans = _statusFilter == null
                                 ? _plans
-                                : _plans.where((p) => p.status == _statusFilter).toList();
+                                : _plans
+                                    .where((p) => p.status == _statusFilter)
+                                    .toList();
+
                             if (plans.isEmpty) {
                               return EmptyStateView(
                                 icon: Icons.card_giftcard_outlined,
                                 title: 'No gift plans yet',
-                                message: 'Create a gift plan to start tracking budget and status.',
+                                message:
+                                    'Create a gift plan to start tracking budget and status.',
                                 actionLabel: 'New gift plan',
                                 onAction: () => _openForm(),
                               );
                             }
+
                             return ListView.builder(
                               itemCount: plans.length,
                               itemBuilder: (context, index) {
                                 final plan = plans[index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(bottom: AppSpacing.space8),
+                                  padding: const EdgeInsets.only(
+                                    bottom: AppSpacing.space8,
+                                  ),
                                   child: GiftPlanCard(
                                     plan: plan,
-                                    onTap: () => _openForm(plan: plan),
+                                    onTap: null,
                                     onEdit: () => _openForm(plan: plan),
+                                    onAddSpent: () => _addSpent(plan),
                                     onDelete: () => _confirmDelete(plan),
                                   ),
                                 );

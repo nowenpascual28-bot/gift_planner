@@ -1,3 +1,4 @@
+/// A person the current user buys gifts for.
 class Recipient {
   final String id;
   final String userId;
@@ -32,6 +33,8 @@ class Recipient {
     );
   }
 
+  /// Fields sent to Supabase when creating a new recipient. `user_id` is
+  /// added by the service so it always matches the signed-in user.
   Map<String, dynamic> toInsertMap() {
     return {
       'name': name,

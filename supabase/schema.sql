@@ -113,7 +113,7 @@ create table if not exists public.gift_plans (
   budget numeric(12, 2) not null default 0 check (budget >= 0),
   spent numeric(12, 2) not null default 0 check (spent >= 0),
   status text not null default 'planned'
-    check (status in ('planned', 'purchased', 'completed', 'cancelled')),
+    check (status in ('planned', 'in_progress', 'purchased', 'completed', 'cancelled')),
   notes text not null default '',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()

@@ -35,7 +35,6 @@ class GiftPlanService {
     String? occasionId,
     required String giftName,
     required double budget,
-    required double spent,
     required GiftPlanStatus status,
     required String notes,
   }) async {
@@ -47,7 +46,7 @@ class GiftPlanService {
           'occasion_id': occasionId,
           'gift_name': giftName,
           'budget': budget,
-          'spent': spent,
+          'spent': 0,
           'status': status.dbValue,
           'notes': notes,
         })
@@ -64,6 +63,32 @@ class GiftPlanService {
         .eq('id', plan.id)
         .select(_selectJoined)
         .single();
+    return GiftPlan.fromMap(row);
+  }
+
+  /// Adds an amount to the current spent value without opening the edit form.
+  Future<GiftPlan> addSpent(String id, double amount) async {
+    if (amount <= 0) {
+      throw ArgumentError('Spent amount must be greater than zero.');
+    }
+
+    final current = await _client
+        .from('gift_plans')
+        .select('spent')
+        .eq('user_id', _uid)
+        .eq('id', id)
+        .single();
+
+    final currentSpent = (current['spent'] as num?)?.toDouble() ?? 0;
+
+    final row = await _client
+        .from('gift_plans')
+        .update({'spent': currentSpent + amount})
+        .eq('user_id', _uid)
+        .eq('id', id)
+        .select(_selectJoined)
+        .single();
+
     return GiftPlan.fromMap(row);
   }
 

@@ -31,25 +31,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
-
     setState(() {
       _loading = true;
       _error = null;
     });
-
     try {
-      await _auth.signIn(
-        email: _email.text.trim(),
-        password: _password.text,
-      );
-
-      // AuthGate handles moving to the main application.
+      await _auth.signIn(email: _email.text.trim(), password: _password.text);
     } on AuthFailure catch (e) {
       setState(() => _error = e.message);
     } finally {
-      if (mounted) {
-        setState(() => _loading = false);
-      }
+      if (mounted) setState(() => _loading = false);
     }
   }
 
@@ -72,46 +63,33 @@ class _LoginScreenState extends State<LoginScreen> {
                       size: 64,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-
                     const SizedBox(height: AppSpacing.space16),
-
                     Text(
                       'Gift Planner',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-
                     const SizedBox(height: AppSpacing.space8),
-
                     Text(
                       'Sign in to keep planning thoughtful gifts.',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-
                     const SizedBox(height: AppSpacing.space32),
-
                     AppTextField(
                       label: 'Email',
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         final v = value?.trim() ?? '';
-
-                        if (v.isEmpty) {
-                          return 'Email is required';
-                        }
-
+                        if (v.isEmpty) return 'Email is required';
                         if (!v.contains('@') || !v.contains('.')) {
                           return 'Enter a valid email';
                         }
-
                         return null;
                       },
                     ),
-
                     const SizedBox(height: AppSpacing.space16),
-
                     AppTextField(
                       label: 'Password',
                       controller: _password,
@@ -120,14 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value == null || value.isEmpty) {
                           return 'Password is required';
                         }
-
                         return null;
                       },
                     ),
-
                     if (_error != null) ...[
                       const SizedBox(height: AppSpacing.space16),
-
                       Text(
                         _error!,
                         style: TextStyle(
@@ -136,30 +111,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ],
-
                     const SizedBox(height: AppSpacing.space24),
-
                     PrimaryButton(
                       label: 'Log in',
                       onPressed: _submit,
                       loading: _loading,
                     ),
-
                     const SizedBox(height: AppSpacing.space16),
-
                     TextButton(
                       onPressed: _loading
                           ? null
-                          : () {
-                              Navigator.of(context).push(
+                          : () => Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (_) => const RegisterScreen(),
                                 ),
-                              );
-                            },
-                      child: const Text(
-                        "Don't have an account? Register",
-                      ),
+                              ),
+                      child: const Text("Don't have an account? Register"),
                     ),
                   ],
                 ),

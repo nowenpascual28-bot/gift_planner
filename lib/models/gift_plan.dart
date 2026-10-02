@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Lifecycle of a gift plan.
 enum GiftPlanStatus {
   planned,
+  inProgress,
   purchased,
   completed,
   cancelled;
@@ -10,6 +12,8 @@ enum GiftPlanStatus {
     switch (this) {
       case GiftPlanStatus.planned:
         return 'Planned';
+      case GiftPlanStatus.inProgress:
+        return 'In Progress';
       case GiftPlanStatus.purchased:
         return 'Purchased';
       case GiftPlanStatus.completed:
@@ -19,7 +23,20 @@ enum GiftPlanStatus {
     }
   }
 
-  String get dbValue => name;
+  String get dbValue {
+    switch (this) {
+      case GiftPlanStatus.planned:
+        return 'planned';
+      case GiftPlanStatus.inProgress:
+        return 'in_progress';
+      case GiftPlanStatus.purchased:
+        return 'purchased';
+      case GiftPlanStatus.completed:
+        return 'completed';
+      case GiftPlanStatus.cancelled:
+        return 'cancelled';
+    }
+  }
 
   static GiftPlanStatus fromDb(String value) {
     return GiftPlanStatus.values.firstWhere(
@@ -41,7 +58,6 @@ class GiftPlan {
   final String notes;
   final DateTime createdAt;
   final DateTime updatedAt;
-
   final String? recipientName;
   final String? occasionTitle;
 
@@ -62,14 +78,13 @@ class GiftPlan {
   });
 
   double get remaining => budget - spent;
-
   bool get isOverBudget => spent > budget;
-
   double get progress => budget <= 0 ? 0 : spent / budget;
 
   factory GiftPlan.fromMap(Map<String, dynamic> map) {
     final recipient = map['recipients'] as Map<String, dynamic>?;
     final occasion = map['occasions'] as Map<String, dynamic>?;
+
     return GiftPlan(
       id: map['id'] as String,
       userId: map['user_id'] as String,
@@ -87,25 +102,12 @@ class GiftPlan {
     );
   }
 
-  Map<String, dynamic> toInsertMap() {
-    return {
-      'recipient_id': recipientId,
-      'occasion_id': occasionId,
-      'gift_name': giftName,
-      'budget': budget,
-      'spent': spent,
-      'status': status.dbValue,
-      'notes': notes,
-    };
-  }
-
   Map<String, dynamic> toUpdateMap() {
     return {
       'recipient_id': recipientId,
       'occasion_id': occasionId,
       'gift_name': giftName,
       'budget': budget,
-      'spent': spent,
       'status': status.dbValue,
       'notes': notes,
     };
@@ -117,10 +119,12 @@ extension GiftPlanStatusColor on GiftPlanStatus {
     switch (this) {
       case GiftPlanStatus.planned:
         return scheme.secondary;
-      case GiftPlanStatus.purchased:
+      case GiftPlanStatus.inProgress:
         return scheme.primary;
-      case GiftPlanStatus.completed:
+      case GiftPlanStatus.purchased:
         return scheme.tertiary;
+      case GiftPlanStatus.completed:
+        return scheme.secondary;
       case GiftPlanStatus.cancelled:
         return scheme.error;
     }
