@@ -21,6 +21,6 @@
 
 ## Still to add
 
-- [ ] Final screenshots from the working app
-- [ ] Demo video
-- [ ] Demo video link in `docs/05-demo-video.md`
+- [x] Final screenshots from the working app
+- [x] Demo video
+- [x] Demo video link in `docs/05-demo-video.md`

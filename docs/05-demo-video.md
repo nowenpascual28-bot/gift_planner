@@ -23,4 +23,4 @@ The demo should be around 3–5 minutes and should use sample data only.
 
 ## Video link
 
-**To be added after recording.**
+https://drive.google.com/file/d/1WrdFoBrmwsWbQx6gpc07nBWuVLJraX_s/view?usp=sharing 
