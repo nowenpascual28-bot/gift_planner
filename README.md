@@ -46,8 +46,9 @@ Create the required tables and RLS policies using:
 supabase/schema.sql
 ```
 
-For local development, created a `.env` file based on `.env.example` and add my own Supabase URL and publishable key.
+For local development, create a `.env` file based on `.env.example` and add your own Supabase URL and publishable key.
 
+Do not commit the real `.env` file.
 
 ### Run the app
 
@@ -61,7 +62,7 @@ https://nowenpascual28-bot.github.io/gift_planner/
 
 ## 3. How to use the app
 
-1. Register or log in. If you  register you will see a notife at your email then confirm that.
+1. Register or log in.
 2. Open the Dashboard to see an overview.
 3. Add people in the Recipient List.
 4. Add birthdays or other occasions.

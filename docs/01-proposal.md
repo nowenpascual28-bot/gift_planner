@@ -23,9 +23,9 @@ Gift Planner is for individual users who buy gifts for family members, friends, 
 
 The app stores:
 
-- Recipient name, relationship, interests, and notes(optional)
-- Occasion title, date, recipient, and notes(optional)
-- Gift name, recipient, occasion, budget, amount spent, status, and notes(optional)
+- Recipient name, relationship, interests, and notes
+- Occasion title, date, recipient, and notes
+- Gift name, recipient, occasion, budget, amount spent, status, and notes
 - User account information through Supabase Authentication
 
 ## Out of scope

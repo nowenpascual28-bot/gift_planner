@@ -41,6 +41,10 @@ AI also helped suggest UI improvements such as:
 
 I chose which suggestions to keep based on how I wanted the final app to look.
 
+### Documentation
+
+AI helped organize and improve the project documentation. I reviewed the documentation and kept the parts that match the actual project.
+
 ## What I did myself
 
 I was responsible for the project decisions and final checking. I:

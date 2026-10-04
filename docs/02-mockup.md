@@ -6,7 +6,7 @@ The mockup shows the planned visual design of the Gift Planner app. The wirefram
 
 ### 1. Login / Registration
 
-The user can log in to an existing account or register a new account. If you register new account use your gmail then create a new password then it will confirm your email through notifiying you in your email just confirm it.
+The user can log in to an existing account or register a new account.
 
 ### 2. Dashboard
 
@@ -18,7 +18,7 @@ The user can search for recipients, open their details, edit them, delete them, 
 
 ### 4. Add/Edit Recipient
 
-The user enters the recipient's name, relationship, interests, and notes(optional).
+The user enters the recipient's name, relationship, interests, and notes.
 
 ### 5. Recipient Details
 
