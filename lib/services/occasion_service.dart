@@ -2,7 +2,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/occasion.dart';
 
-/// Supabase-backed CRUD for the `occasions` table.
 class OccasionService {
   final SupabaseClient _client = Supabase.instance.client;
 
@@ -26,7 +25,6 @@ class OccasionService {
     return rows.map((r) => Occasion.fromMap(r)).toList();
   }
 
-  /// Future occasions ordered by how soon they occur, for the dashboard.
   Future<List<Occasion>> getUpcoming({int limit = 5}) async {
     final all = await getOccasions();
     final upcoming = all.where((o) => o.daysRemaining() >= 0).toList();

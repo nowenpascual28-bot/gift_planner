@@ -1,61 +1,52 @@
-# Weekly reports
+# Weekly Project Reports
 
-These reports record the project progress as the app moves from the planned design into a tested final submission.
+## Week 1
 
----
+### What I worked on
 
-## Week 1 (2026-09-22 to 2026-09-26)
+- Started building the Gift Planner application with Flutter.
+- Set up the main project structure.
+- Worked on the main screens and navigation.
+- Connected the project to Supabase.
+- Started the recipient, occasion, and gift-plan features.
 
-**Done this week**
-- Built the main Gift Planner scaffold with Flutter and Supabase.
-- Added the Recipient, Occasion, and Gift Plan models and Supabase-backed services.
-- Added the authentication flow and the eight planned application screens/flows.
-- Added reusable widgets, the Material theme, and the PostgreSQL schema with Row Level Security policies.
+### What clicked
 
-**In progress**
-- Live Supabase configuration and end-to-end testing.
-- Analyzer/test verification on the development machine.
+I started understanding how the Flutter screens, widgets, and Supabase services work together.
 
-**Blocked or stuck on**
-- The initial implementation had not yet been verified with a local Flutter SDK and a live Supabase project.
+### Problems
 
-**Decisions made, and why**
-- Kept state management to `setState` and `FutureBuilder` to avoid unnecessary architecture for the MVP.
-- Used build-time `--dart-define-from-file=.env` configuration so local Supabase values stay outside the committed source.
-- Kept AI gift suggestions and other stretch features outside the MVP.
-
-**Next week I will:**
-- Configure and test the Supabase project.
-- Run `flutter analyze` and `flutter test`.
-- Manually test registration, login, CRUD, history, and logout.
-- Capture screenshots and prepare the final demo.
+Some parts needed debugging and testing, especially saving data and connecting the app to the database.
 
 ---
 
-## Week 2 (2026-09-28)
+## Week 2
 
-**Done this week**
-- Restored the committed `.env.example` configuration template.
-- Made budget/history displays use Philippine pesos (`₱`) to match the project context and mockup.
-- Added the mockup board, mockup PDF, and design-system PDF to `docs/assets/`.
-- Replaced the starter documentation placeholders with project-specific proposal, mockup, design-system, demo, and security documentation.
-- Updated the GitHub Pages workflow so the Supabase URL and publishable key can be passed from repository Actions secrets into the web build.
+### What I worked on
 
-**In progress**
-- Local Flutter verification and live Supabase testing.
-- Real screenshots from the working application.
-- Final demo recording.
+- Continued the recipient, occasion, and gift-plan features.
+- Improved the Dashboard.
+- Added history.
+- Added light and dark mode.
+- Added gift-plan status filters.
+- Added the Add Spent feature.
+- Fixed saved items not appearing immediately.
+- Fixed incorrect occasion day calculations.
+- Updated the app to use Philippine peso formatting.
+- Improved the GitHub Pages deployment.
 
-**Blocked or stuck on**
-- The current coding environment used for this repository review does not have the Flutter CLI installed, so the final `flutter analyze`/`flutter test` result must be obtained on the development machine.
+### What clicked
 
-**Decisions made, and why**
-- Did not claim that analyzer, widget tests, RLS, or deployment were successful before they are actually tested.
-- Kept the mockup assets clearly separate from the screenshots that still need to be captured from the running application.
+I became more comfortable with Flutter state updates, Supabase queries, and how the different screens share data.
 
-**Next steps**
-- Run the Flutter checks locally.
-- Fix any compiler/analyzer/test issues.
-- Test RLS using two separate Supabase accounts.
-- Capture final screenshots and record the demo.
-- Push the verified commits and confirm GitHub Pages.
+### Problems
+
+There were some errors with database status values and deployment configuration. I fixed these and tested the changes.
+
+---
+
+## Final testing
+
+Before final submission, I checked the main application flow, the live demo, and the Supabase security/RLS setup.
+
+The remaining final-submission work is capturing the final screenshots and recording the demo video.

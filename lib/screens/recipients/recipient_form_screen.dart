@@ -7,8 +7,6 @@ import '../../widgets/app_text_field.dart';
 import '../../widgets/app_top_bar.dart';
 import '../../widgets/primary_button.dart';
 
-/// Add/edit form for a [Recipient]. Pass an existing [recipient] to edit it;
-/// leave it null to create a new one.
 class RecipientFormScreen extends StatefulWidget {
   final Recipient? recipient;
 
@@ -90,7 +88,10 @@ class _RecipientFormScreenState extends State<RecipientFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBar(title: _isEditing ? 'Edit recipient' : 'Add recipient', showBack: true),
+      appBar: AppTopBar(
+        title: _isEditing ? 'Edit recipient' : 'Add recipient',
+        showBack: true,
+      ),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -100,10 +101,15 @@ class _RecipientFormScreenState extends State<RecipientFormScreen> {
               AppTextField(
                 label: 'Name',
                 controller: _name,
-                validator: (v) => (v == null || v.trim().isEmpty) ? 'Name is required' : null,
+                validator: (v) =>
+                    (v == null || v.trim().isEmpty) ? 'Name is required' : null,
               ),
               const SizedBox(height: AppSpacing.space16),
-              AppTextField(label: 'Relationship', controller: _relationship, hint: 'e.g. Sister, Best friend'),
+              AppTextField(
+                label: 'Relationship',
+                controller: _relationship,
+                hint: 'e.g. Sister, Best friend',
+              ),
               const SizedBox(height: AppSpacing.space16),
               AppTextField(
                 label: 'Interests',
@@ -115,7 +121,10 @@ class _RecipientFormScreenState extends State<RecipientFormScreen> {
               AppTextField(label: 'Notes', controller: _notes, maxLines: 4),
               if (_error != null) ...[
                 const SizedBox(height: AppSpacing.space16),
-                Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                Text(
+                  _error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ],
               const SizedBox(height: AppSpacing.space24),
               PrimaryButton(label: 'Save', onPressed: _save, loading: _saving),

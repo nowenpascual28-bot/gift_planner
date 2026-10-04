@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../models/gift_plan.dart';
 
-/// A small colored pill showing a [GiftPlanStatus].
 class StatusChip extends StatelessWidget {
   final GiftPlanStatus status;
 
@@ -20,10 +19,10 @@ class StatusChip extends StatelessWidget {
       ),
       child: Text(
         status.label,
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall
-            ?.copyWith(color: color, fontWeight: FontWeight.bold),
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

@@ -16,8 +16,6 @@ import '../gift_plans/gift_plan_form_screen.dart';
 import '../occasions/occasion_form_screen.dart';
 import 'recipient_form_screen.dart';
 
-/// Full detail view for a single recipient: their info plus their occasions
-/// and gift plans, with quick actions to add more of either.
 class RecipientDetailsScreen extends StatefulWidget {
   final String recipientId;
 

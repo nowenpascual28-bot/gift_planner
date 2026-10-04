@@ -1,155 +1,90 @@
 # Gift Planner
 
-**Live demo:** https://nowenpascual28-bot.github.io/gift_planner/
+Gift Planner is a Flutter app that helps users organize recipients, special occasions, gift ideas, and budgets in one place.
 
-**Course:** Applications Development and Emerging Technologies (6ADET)  
-**Author:** Nowen Pascual
+## 1. Project overview
 
----
+People can forget birthdays and other special occasions, or have a gift idea but lose track of the budget. Gift Planner puts these details together so the user can plan gifts more easily.
 
-## 1. Overview
+The app is made for individual users buying gifts for family, friends, classmates, or other people they know.
 
-Gift Planner is a mobile-first Flutter application that helps people remember important occasions, organize gift ideas, and keep track of gift budgets in one place.
+### Main features
 
-The problem it addresses is simple: gift information can be scattered across notes, calendars, messages, or memory. A user may remember a birthday but forget the gift idea, or know what to buy but lose track of the planned budget.
+- Register and log in
+- Dashboard with upcoming occasions and gift plans
+- Add, edit, delete, and search recipients
+- Save birthdays and other special occasions
+- Create gift plans with budgets and spending
+- Track gift status: Planned, In Progress, Purchased, Completed, or Cancelled
+- Add spending to an existing gift plan
+- View gift planning history
+- Light and dark mode
+- User data protected with Supabase Row Level Security (RLS)
 
-The app is designed for individual users who regularly buy gifts for family members, friends, classmates, or other people they know. Each signed-in user has their own recipients, occasions, and gift plans.
+AI gift suggestions are not part of the MVP. They were kept as a possible future feature.
 
 ## 2. Setup and installation
 
 ### Requirements
 
-- Flutter SDK (stable channel)
-- Dart SDK included with Flutter
+- Flutter
+- Dart
 - A Supabase project
 - Chrome or another supported Flutter device
 
-### Install
+### Install dependencies
 
 ```bash
-git clone https://github.com/nowenpascual28-bot/gift_planner
-cd gift_planner
 flutter pub get
 ```
 
-Copy the configuration template:
+### Supabase setup
 
-```bash
-cp .env.example .env
+Create the required tables and RLS policies using:
+
+```text
+supabase/schema.sql
 ```
 
-Then edit `.env` with your own Supabase project values:
+For local development, created a `.env` file based on `.env.example` and add my own Supabase URL and publishable key.
 
-| Variable | Purpose |
-| --- | --- |
-| `SUPABASE_URL` | Your Supabase project URL |
-| `SUPABASE_PUBLISHABLE_KEY` | Your Supabase publishable/anon key |
 
-Do not commit `.env`. It is intentionally ignored by Git. The committed `.env.example` contains placeholders only.
-
-### Database setup
-
-1. Open the Supabase SQL Editor.
-2. Open `supabase/schema.sql` from this repository.
-3. Run the complete SQL script.
-4. Confirm that `recipients`, `occasions`, and `gift_plans` exist.
-5. Confirm Row Level Security is enabled on all three tables.
-
-### GitHub Pages configuration
-
-The web deployment workflow expects two repository Actions secrets:
-
-- `SUPABASE_URL`
-- `SUPABASE_PUBLISHABLE_KEY`
-
-Add them under **GitHub repository → Settings → Secrets and variables → Actions**. Do not put either value directly into the workflow file. The publishable key is intended for the client; never use a Supabase `service_role`/secret key in the browser build.
-
-## 3. How to run it
-
-For local web development:
+### Run the app
 
 ```bash
 flutter run -d chrome --dart-define-from-file=.env
 ```
 
-If the configuration is missing, the app shows a setup screen instead of crashing.
+The deployed web version is available at:
 
-For a normal Flutter check before committing:
+https://nowenpascual28-bot.github.io/gift_planner/
 
-```bash
-flutter analyze
-flutter test
-```
+## 3. How to use the app
 
-## 4. Features and usage
+1. Register or log in. If you  register you will see a notife at your email then confirm that.
+2. Open the Dashboard to see an overview.
+3. Add people in the Recipient List.
+4. Add birthdays or other occasions.
+5. Create gift plans and set a budget.
+6. Update the gift status as the plan moves forward.
+7. Use Add Spent when more money is spent on a gift.
+8. Check History to review previous plans.
+9. Use the theme button to switch between light and dark mode.
 
-### Authentication
-
-- Register with an email and password.
-- Log in with an existing account.
-- Log out from the Dashboard.
-- Supabase Authentication manages the account session.
-
-### Dashboard
-
-- Shows the number of recipients.
-- Shows active gift plans.
-- Shows upcoming occasions.
-- Provides shortcuts to the main sections.
-- Includes a light/dark mode toggle.
-
-### Recipients
-
-- Add a recipient.
-- Edit recipient information.
-- Delete a recipient.
-- Search recipients by name.
-- View recipient details, occasions, and gift plans.
-
-### Occasions
-
-- Add birthdays and other special occasions.
-- Choose the recipient and date.
-- Add notes.
-- Edit or delete an occasion.
-- Filter occasions by recipient.
-
-### Gift plans
-
-- Create a gift plan for a recipient.
-- Optionally connect it to an occasion.
-- Set a budget and amount spent.
-- Track Planned, In Progress, Purchased, Completed, or Cancelled status.
-- Add spending directly from a gift card without opening the full edit form.
-- See budget progress and overspending.
-- Edit or delete plans.
-
-### History
-
-- Review previous gift plans.
-- Filter history by status.
-- See recipient, occasion, date, spending, and status.
-
-## 5. Project structure
+## 4. Project structure
 
 ```text
 lib/
   config/       Supabase configuration
   models/       Recipient, Occasion, GiftPlan
-  services/     Authentication and Supabase CRUD services
-  theme/        Colors, spacing, themes, and theme controller
+  services/     Authentication and Supabase services
+  theme/        Colors, spacing, and themes
   widgets/      Reusable UI components
-  screens/
-    auth/       Login, registration, auth gate
-    dashboard/  Dashboard
-    recipients/ Recipient list, form, details
-    occasions/  Occasion list and form
-    gift_plans/ Gift plan list and form
-    history/    Gift planning history
+  screens/      Application screens
   main.dart     Application entry point
 
 supabase/
-  schema.sql    PostgreSQL tables, indexes, triggers, and RLS policies
+  schema.sql    Database tables and RLS policies
 
 docs/
   01-proposal.md
@@ -158,14 +93,11 @@ docs/
   04-weekly-reports.md
   05-demo-video.md
   06-security-and-privacy.md
-  assets/       Mockups and design-system materials
 ```
 
-The project intentionally uses simple Flutter state management with `setState`, `FutureBuilder`, and a small `ValueNotifier` for the theme toggle instead of adding an unnecessary state-management package.
+## 5. Final screens
 
-## 6. Screens and mockup
-
-The project has these main screens/flows:
+The project has these main screens:
 
 1. Login / Registration
 2. Dashboard
@@ -176,52 +108,42 @@ The project has these main screens/flows:
 7. Gift Plan Screen
 8. Gift Planning History
 
-### Mockup board
+## 6. Screenshots
 
-![Gift Planner mockup board](docs/assets/gift-planner-mockup-board.png)
+Final screenshots will be added after the final screenshot capture. They should show the working application and use sample data only.
 
-[Open the complete mockup PDF](docs/assets/gift-planner-mockup.pdf)
+Recommended files:
 
-## 7. Screenshots
+- `docs/assets/login-register.png`
+- `docs/assets/dashboard.png`
+- `docs/assets/recipient-list.png`
+- `docs/assets/recipient-form.png`
+- `docs/assets/recipient-details.png`
+- `docs/assets/occasions.png`
+- `docs/assets/gift-plans.png`
+- `docs/assets/history.png`
 
-The final README should use screenshots from the **working application**, not only the planning mockups. The following filenames are reserved for those screenshots:
+## 7. Testing and final status
 
-| Screen | File |
-| --- | --- |
-| Login / Register | `docs/assets/login-register.png` |
-| Dashboard | `docs/assets/dashboard.png` |
-| Recipient List | `docs/assets/recipient-list.png` |
-| Add/Edit Recipient | `docs/assets/recipient-form.png` |
-| Recipient Details | `docs/assets/recipient-details.png` |
-| Occasions | `docs/assets/occasions.png` |
-| Gift Plans | `docs/assets/gift-plans.png` |
-| History | `docs/assets/history.png` |
+I checked the app on my development setup and completed the main testing needed for the final project. The live GitHub Pages demo is also working.
 
-Until the working-app screenshots are captured, the planning mockups remain clearly labelled as mockups in `docs/02-mockup.md`.
+I also tested the Supabase RLS/security rules.
 
-## 8. Known issues and next steps
+The remaining submission item is the final demo video. The final screenshots are also kept as a separate final-submission step.
 
-Current verification and deployment notes:
+## 8. Known issues and future improvements
 
-- Run `flutter pub get` on the development machine.
-- Run `flutter analyze` and fix any analyzer errors or warnings that matter to the submission.
-- Run `flutter test` and record the result.
-- Run the complete user flow against the live Supabase project.
-- Test Row Level Security with two separate test accounts.
-- Capture screenshots from the working app.
-- Record the 3–5 minute demo video.
-- GitHub Pages deployment is configured through GitHub Actions; the Supabase deployment secrets must be present for the live app to connect to Supabase.
+The current MVP is focused on the main gift-planning flow. Possible future features include:
 
-These are verification/submission tasks rather than new MVP features. The main application structure and CRUD flow are already implemented.
+- AI gift suggestions
+- Notifications and reminders
+- Recipient profile images
+- PDF export
+- Sharing gift plans
+- Online gift links
 
 ## Credits
 
-The repository started from the course-provided Flutter starter project. AI assistance was used during implementation and debugging; the details are documented in [AI-USAGE.md](AI-USAGE.md).
+This project was developed for the final project requirements using Flutter and Supabase.
 
-## License
-
-MIT, see [LICENSE](LICENSE).
-
-## Authentication testing note
-
-Supabase's built-in email provider has a low email-sending limit for development/testing. If registration testing reaches the email limit, use an existing test account or temporarily disable email confirmation in Supabase Auth for the classroom demo. Do not treat this as an app data limit. For production email delivery, use custom SMTP.
+AI tools were used as development assistants for some coding, debugging, explanations, and documentation. See `AI-USAGE.md` for more details.

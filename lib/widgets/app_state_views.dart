@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'primary_button.dart';
 
-/// Centered spinner used while a screen's data is loading.
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
 
@@ -12,7 +11,6 @@ class LoadingView extends StatelessWidget {
   }
 }
 
-/// A friendly "nothing here yet" state with an optional call to action.
 class EmptyStateView extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -49,9 +47,9 @@ class EmptyStateView extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurfaceVariant,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
             ),
             if (actionLabel != null) ...[
               const SizedBox(height: 16),
@@ -64,7 +62,6 @@ class EmptyStateView extends StatelessWidget {
   }
 }
 
-/// A clear, human-readable error state with a retry action.
 class ErrorStateView extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;

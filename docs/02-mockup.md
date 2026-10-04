@@ -1,66 +1,55 @@
-# Mockup and wireframes
+# Mockup and Wireframes
 
-The mockup is the coloured version of the planned screens. It uses invented sample data and the final Gift Planner visual direction.
+The mockup shows the planned visual design of the Gift Planner app. The wireframes were completed earlier, and the coloured mockup was used to show the final visual direction.
 
-## Complete mockup
-
-![Gift Planner mockup board](assets/gift-planner-mockup-board.png)
-
-[Open the complete 8-screen mockup PDF](assets/gift-planner-mockup.pdf)
-
-## Screens
+## Eight screens
 
 ### 1. Login / Registration
 
-**User action:** The user enters an email and password, logs in, or chooses to register.
+The user can log in to an existing account or register a new account. If you register new account use your gmail then create a new password then it will confirm your email through notifiying you in your email just confirm it.
 
 ### 2. Dashboard
 
-**User action:** The user reviews upcoming occasions and active gift plans, then opens one of the main sections.
+The Dashboard gives an overview of upcoming occasions, recipients, gift plans, budget, and spending.
 
 ### 3. Recipient List
 
-**User action:** The user searches for a recipient, opens details, or starts adding a recipient.
+The user can search for recipients, open their details, edit them, delete them, or add a new recipient.
 
 ### 4. Add/Edit Recipient
 
-**User action:** The user enters the recipient's name, relationship, interests, and notes, then saves the record.
+The user enters the recipient's name, relationship, interests, and notes(optional).
 
 ### 5. Recipient Details
 
-**User action:** The user reviews one person's information, occasions, and gift plans, and can add related records.
+The user can see the person's information together with related occasions and gift plans.
 
 ### 6. Occasion Screen
 
-**User action:** The user adds, edits, filters, or deletes birthdays and other special occasions.
+The user can add and manage birthdays and other special occasions.
 
 ### 7. Gift Plan Screen
 
-**User action:** The user creates or edits a gift plan, sets a budget and spending amount, and selects a status.
+The user can create a gift plan, set a budget, track spending, and choose a status.
 
 ### 8. Gift Planning History
 
-**User action:** The user filters and reviews previous gift plans and spending.
+The user can review previous gift plans, spending, and statuses.
 
-## Planned flow
+## User flow
 
 ```text
 Register / Log in
-       ↓
+       |
    Dashboard
-   ↙   ↓   ↘
-Recipients  Occasions  Gift Plans
-   ↓          ↓           ↓
-Details → Add/Edit ← Add/Edit
-       \      |      /
-        \     |     /
-       Gift planning history
+   /    |     \
+Recipients Occasions Gift Plans
+   |       |        |
+Details  Add/Edit  Add/Edit
+       \    |     /
+        Gift History
 ```
 
-## Sample content
+## Mockup note
 
-The mockup uses invented examples such as Maria Santos, a Best Friend relationship, interests including makeup/books/coffee, an October 12 birthday, and a Kindle Paperwhite gift plan. These examples are for visual demonstration only.
-
-## Wireframes
-
-The wireframes were completed before the coloured mockup. The current repository contains the final coloured mockup materials; paper/early wireframe photos can be added to `assets/` if the original files are required for the final submission.
+The mockup uses sample names and information for demonstration only. Final screenshots should be taken from the working application and should use sample data instead of real personal information.

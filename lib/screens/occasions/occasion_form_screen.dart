@@ -11,9 +11,6 @@ import '../../widgets/app_top_bar.dart';
 import '../../widgets/primary_button.dart';
 import '../recipients/recipient_form_screen.dart';
 
-/// Add/edit form for an [Occasion]. Pass [occasion] to edit an existing one,
-/// or [initialRecipientId] to pre-select a recipient when creating a new one
-/// from that recipient's details screen.
 class OccasionFormScreen extends StatefulWidget {
   final Occasion? occasion;
   final String? initialRecipientId;
@@ -67,7 +64,6 @@ class _OccasionFormScreenState extends State<OccasionFormScreen> {
     );
     if (picked != null) setState(() => _date = picked);
   }
-
 
   Future<void> _addRecipient() async {
     final saved = await Navigator.of(context).push<Recipient>(
@@ -123,7 +119,10 @@ class _OccasionFormScreenState extends State<OccasionFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBar(title: _isEditing ? 'Edit occasion' : 'Add occasion', showBack: true),
+      appBar: AppTopBar(
+        title: _isEditing ? 'Edit occasion' : 'Add occasion',
+        showBack: true,
+      ),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -134,7 +133,9 @@ class _OccasionFormScreenState extends State<OccasionFormScreen> {
                 label: 'Title',
                 controller: _title,
                 hint: 'e.g. Birthday, Anniversary, Graduation',
-                validator: (v) => (v == null || v.trim().isEmpty) ? 'Title is required' : null,
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? 'Title is required'
+                    : null,
               ),
               const SizedBox(height: AppSpacing.space16),
               FutureBuilder<List<Recipient>>(
@@ -142,13 +143,21 @@ class _OccasionFormScreenState extends State<OccasionFormScreen> {
                 builder: (context, snapshot) {
                   final recipients = snapshot.data ?? const <Recipient>[];
                   return DropdownButtonFormField<String>(
-                    initialValue: recipients.any((r) => r.id == _recipientId) ? _recipientId : null,
+                    initialValue: recipients.any((r) => r.id == _recipientId)
+                        ? _recipientId
+                        : null,
                     decoration: const InputDecoration(labelText: 'Recipient'),
                     items: recipients
-                        .map((r) => DropdownMenuItem(value: r.id, child: Text(r.name)))
+                        .map(
+                          (r) => DropdownMenuItem(
+                            value: r.id,
+                            child: Text(r.name),
+                          ),
+                        )
                         .toList(),
                     onChanged: (value) => setState(() => _recipientId = value),
-                    validator: (value) => value == null ? 'Choose a recipient' : null,
+                    validator: (value) =>
+                        value == null ? 'Choose a recipient' : null,
                   );
                 },
               ),
@@ -172,7 +181,10 @@ class _OccasionFormScreenState extends State<OccasionFormScreen> {
               AppTextField(label: 'Notes', controller: _notes, maxLines: 4),
               if (_error != null) ...[
                 const SizedBox(height: AppSpacing.space16),
-                Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                Text(
+                  _error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ],
               const SizedBox(height: AppSpacing.space24),
               PrimaryButton(label: 'Save', onPressed: _save, loading: _saving),

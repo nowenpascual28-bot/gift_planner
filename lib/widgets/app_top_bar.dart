@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'theme_toggle_button.dart';
 
-/// The standard top bar used across the app so every screen shares the same
-/// title style, theme toggle, and action placement.
 class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;

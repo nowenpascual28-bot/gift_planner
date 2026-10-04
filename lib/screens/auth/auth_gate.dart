@@ -4,9 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../app_shell.dart';
 import 'login_screen.dart';
 
-/// Shows [AppShell] when a session exists and [LoginScreen] otherwise,
-/// reacting live to sign-in and sign-out so logout always lands the user
-/// back on the login screen without extra navigation code.
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -15,7 +12,10 @@ class AuthGate extends StatelessWidget {
     final client = Supabase.instance.client;
     return StreamBuilder<AuthState>(
       stream: client.auth.onAuthStateChange,
-      initialData: AuthState(AuthChangeEvent.initialSession, client.auth.currentSession),
+      initialData: AuthState(
+        AuthChangeEvent.initialSession,
+        client.auth.currentSession,
+      ),
       builder: (context, snapshot) {
         final session = snapshot.data?.session ?? client.auth.currentSession;
         return session == null ? const LoginScreen() : const AppShell();

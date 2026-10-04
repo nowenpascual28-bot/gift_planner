@@ -2,9 +2,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/recipient.dart';
 
-/// Supabase-backed CRUD for the `recipients` table. Row Level Security on
-/// the database is the real enforcement; the explicit `user_id` filters here
-/// exist for clarity and defense in depth.
 class RecipientService {
   final SupabaseClient _client = Supabase.instance.client;
 

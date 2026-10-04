@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // Light theme palette.
   static const Color primary = Color(0xFF6D4CC2);
   static const Color secondary = Color(0xFF9B7AD6);
   static const Color accent = Color(0xFFF3A8C8);
@@ -14,8 +13,6 @@ class AppColors {
   static const Color error = Color(0xFFC94F6D);
   static const Color success = Color(0xFF54BFA5);
 
-  // Dark theme palette. The same purple/pink identity is kept, but the
-  // background and surfaces are darker for comfortable night use.
   static const Color darkBackground = Color(0xFF15121C);
   static const Color darkSurface = Color(0xFF211C2B);
   static const Color darkSurfaceVariant = Color(0xFF2B2537);

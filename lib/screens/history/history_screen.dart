@@ -8,9 +8,6 @@ import '../../widgets/app_state_views.dart';
 import '../../widgets/app_top_bar.dart';
 import '../../widgets/status_chip.dart';
 
-/// Read-focused history of every gift plan the user has made, newest first,
-/// with a status filter. Editing happens from the Gift Plans screen; this
-/// screen is for reviewing what happened.
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
 
@@ -77,7 +74,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   final allPlans = snapshot.data!;
                   final plans = _statusFilter == null
                       ? allPlans
-                      : allPlans.where((p) => p.status == _statusFilter).toList();
+                      : allPlans
+                            .where((p) => p.status == _statusFilter)
+                            .toList();
                   if (plans.isEmpty) {
                     return const EmptyStateView(
                       icon: Icons.history,

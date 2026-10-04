@@ -1,10 +1,3 @@
-// Basic smoke tests for the Gift Planner app.
-//
-// These test widgets in isolation (no live Supabase connection), which is
-// why they build individual screens/widgets rather than the full app: the
-// full app calls Supabase.initialize() in main(), which needs real
-// configuration this test environment does not have.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -27,13 +20,13 @@ void main() {
     expect(find.textContaining('Supabase is not configured'), findsOneWidget);
   });
 
-  testWidgets('BudgetProgress shows spent and remaining amounts', (tester) async {
+  testWidgets('BudgetProgress shows spent and remaining amounts', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.lightTheme,
-        home: const Scaffold(
-          body: BudgetProgress(budget: 100, spent: 40),
-        ),
+        home: const Scaffold(body: BudgetProgress(budget: 100, spent: 40)),
       ),
     );
 
@@ -45,9 +38,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.lightTheme,
-        home: const Scaffold(
-          body: BudgetProgress(budget: 50, spent: 75),
-        ),
+        home: const Scaffold(body: BudgetProgress(budget: 50, spent: 75)),
       ),
     );
 

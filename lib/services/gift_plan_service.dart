@@ -2,7 +2,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/gift_plan.dart';
 
-/// Supabase-backed CRUD for the `gift_plans` table.
 class GiftPlanService {
   final SupabaseClient _client = Supabase.instance.client;
 
@@ -66,7 +65,6 @@ class GiftPlanService {
     return GiftPlan.fromMap(row);
   }
 
-  /// Adds an amount to the current spent value without opening the edit form.
   Future<GiftPlan> addSpent(String id, double amount) async {
     if (amount <= 0) {
       throw ArgumentError('Spent amount must be greater than zero.');

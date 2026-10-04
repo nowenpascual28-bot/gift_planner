@@ -1,9 +1,3 @@
-/// Reads Supabase configuration that is passed in at build/run time with
-/// `--dart-define-from-file=.env` (see `.env.example` in the project root).
-///
-/// Nothing secret lives in this file: the Supabase URL and publishable
-/// (anon) key are safe to ship in a client app. Row Level Security policies
-/// on the database are what actually protect user data.
 class Env {
   Env._();
 

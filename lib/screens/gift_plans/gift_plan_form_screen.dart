@@ -13,8 +13,6 @@ import '../../widgets/budget_progress.dart';
 import '../../widgets/primary_button.dart';
 import '../recipients/recipient_form_screen.dart';
 
-/// Add/edit form for a [GiftPlan]. Pass [plan] to edit an existing one, or
-/// [initialRecipientId] to pre-select a recipient when creating a new one.
 class GiftPlanFormScreen extends StatefulWidget {
   final GiftPlan? plan;
   final String? initialRecipientId;
@@ -51,7 +49,9 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
     super.initState();
     final p = widget.plan;
     _giftName = TextEditingController(text: p?.giftName ?? '');
-    _budget = TextEditingController(text: p == null ? '' : p.budget.toStringAsFixed(2));
+    _budget = TextEditingController(
+      text: p == null ? '' : p.budget.toStringAsFixed(2),
+    );
     _notes = TextEditingController(text: p?.notes ?? '');
     _recipientId = p?.recipientId ?? widget.initialRecipientId;
     _occasionId = p?.occasionId;
@@ -78,7 +78,6 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
     if (value == null || value < 0) return null;
     return value;
   }
-
 
   Future<void> _addRecipient() async {
     final saved = await Navigator.of(context).push<Recipient>(
@@ -145,7 +144,10 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
     final previewSpent = widget.plan?.spent ?? 0;
 
     return Scaffold(
-      appBar: AppTopBar(title: _isEditing ? 'Edit gift plan' : 'New gift plan', showBack: true),
+      appBar: AppTopBar(
+        title: _isEditing ? 'Edit gift plan' : 'New gift plan',
+        showBack: true,
+      ),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -155,7 +157,9 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
               AppTextField(
                 label: 'Gift name',
                 controller: _giftName,
-                validator: (v) => (v == null || v.trim().isEmpty) ? 'Gift name is required' : null,
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? 'Gift name is required'
+                    : null,
               ),
               const SizedBox(height: AppSpacing.space16),
               FutureBuilder<List<Recipient>>(
@@ -163,10 +167,17 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
                 builder: (context, snapshot) {
                   final recipients = snapshot.data ?? const <Recipient>[];
                   return DropdownButtonFormField<String>(
-                    initialValue: recipients.any((r) => r.id == _recipientId) ? _recipientId : null,
+                    initialValue: recipients.any((r) => r.id == _recipientId)
+                        ? _recipientId
+                        : null,
                     decoration: const InputDecoration(labelText: 'Recipient'),
                     items: recipients
-                        .map((r) => DropdownMenuItem(value: r.id, child: Text(r.name)))
+                        .map(
+                          (r) => DropdownMenuItem(
+                            value: r.id,
+                            child: Text(r.name),
+                          ),
+                        )
                         .toList(),
                     onChanged: (value) {
                       setState(() {
@@ -175,7 +186,8 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
                         if (value != null) _loadOccasionsFor(value);
                       });
                     },
-                    validator: (value) => value == null ? 'Choose a recipient' : null,
+                    validator: (value) =>
+                        value == null ? 'Choose a recipient' : null,
                   );
                 },
               ),
@@ -194,11 +206,23 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
                   builder: (context, snapshot) {
                     final occasions = snapshot.data ?? const <Occasion>[];
                     return DropdownButtonFormField<String?>(
-                      initialValue: occasions.any((o) => o.id == _occasionId) ? _occasionId : null,
-                      decoration: const InputDecoration(labelText: 'Occasion (optional)'),
+                      initialValue: occasions.any((o) => o.id == _occasionId)
+                          ? _occasionId
+                          : null,
+                      decoration: const InputDecoration(
+                        labelText: 'Occasion (optional)',
+                      ),
                       items: [
-                        const DropdownMenuItem<String?>(value: null, child: Text('No specific occasion')),
-                        ...occasions.map((o) => DropdownMenuItem<String?>(value: o.id, child: Text(o.title))),
+                        const DropdownMenuItem<String?>(
+                          value: null,
+                          child: Text('No specific occasion'),
+                        ),
+                        ...occasions.map(
+                          (o) => DropdownMenuItem<String?>(
+                            value: o.id,
+                            child: Text(o.title),
+                          ),
+                        ),
                       ],
                       onChanged: (value) => setState(() => _occasionId = value),
                     );
@@ -208,8 +232,12 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
               AppTextField(
                 label: 'Budget',
                 controller: _budget,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                validator: (v) => _parseNonNegative(v ?? '') == null ? 'Enter a valid amount' : null,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                validator: (v) => _parseNonNegative(v ?? '') == null
+                    ? 'Enter a valid amount'
+                    : null,
               ),
               const SizedBox(height: AppSpacing.space16),
               if (_isEditing)
@@ -224,7 +252,9 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
                 initialValue: _status,
                 decoration: const InputDecoration(labelText: 'Status'),
                 items: GiftPlanStatus.values
-                    .map((s) => DropdownMenuItem(value: s, child: Text(s.label)))
+                    .map(
+                      (s) => DropdownMenuItem(value: s, child: Text(s.label)),
+                    )
                     .toList(),
                 onChanged: (value) {
                   if (value != null) setState(() => _status = value);
@@ -234,7 +264,10 @@ class _GiftPlanFormScreenState extends State<GiftPlanFormScreen> {
               AppTextField(label: 'Notes', controller: _notes, maxLines: 4),
               if (_error != null) ...[
                 const SizedBox(height: AppSpacing.space16),
-                Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+                Text(
+                  _error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ],
               const SizedBox(height: AppSpacing.space24),
               PrimaryButton(label: 'Save', onPressed: _save, loading: _saving),

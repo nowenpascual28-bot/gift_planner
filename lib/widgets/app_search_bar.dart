@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// The search field used at the top of list screens (recipients, etc).
 class AppSearchBar extends StatelessWidget {
   final String hint;
   final ValueChanged<String> onChanged;

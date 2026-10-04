@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// The standard form field used across every add/edit screen.
 class AppTextField extends StatelessWidget {
   final String label;
   final String? hint;

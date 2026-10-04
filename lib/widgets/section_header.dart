@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// A row with a section title and an optional trailing action, e.g.
-/// "Upcoming occasions" with a "See all" button.
 class SectionHeader extends StatelessWidget {
   final String title;
   final String? actionLabel;
